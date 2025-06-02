@@ -1,0 +1,68 @@
+{
+  "generalSettings": {
+    "siteName": "AgroLink",
+    "siteDescription": "Plateforme de vente directe de produits agricoles",
+    "maintenanceMode": false,
+    "registrationEnabled": true,
+    "emailVerificationRequired": true,
+    "defaultLanguage": "fr",
+    "defaultCurrency": "EUR",
+    "timezone": "Europe/Paris"
+  },
+  "paymentSettings": {
+    "stripeEnabled": true,
+    "paypalEnabled": true,
+    "bankTransferEnabled": true,
+    "commissionRate": 5.0,
+    "minimumPayout": 50.0,
+    "payoutFrequency": "weekly"
+  },
+  "subscriptionPlans": [
+    {
+      "id": "basic",
+      "name": "Basique",
+      "price": 0,
+      "features": ["Jusqu'à 10 produits", "Support par email", "Commission 8%"],
+      "maxProducts": 10,
+      "commission": 8.0
+    },
+    {
+      "id": "premium",
+      "name": "Premium",
+      "price": 29.99,
+      "features": ["Produits illimités", "Support prioritaire", "Commission 5%", "Analytics avancées"],
+      "maxProducts": -1,
+      "commission": 5.0
+    },
+    {
+      "id": "enterprise",
+      "name": "Entreprise",
+      "price": 99.99,
+      "features": ["Produits illimités", "Support dédié", "Commission 3%", "API access", "White-label"],
+      "maxProducts": -1,
+      "commission": 3.0
+    }
+  ],
+  "userRoles": [
+    {
+      "id": "admin",
+      "name": "Administrateur",
+      "permissions": ["manage_users", "manage_products", "manage_orders", "view_analytics", "system_config"]
+    },
+    {
+      "id": "moderator",
+      "name": "Modérateur",
+      "permissions": ["moderate_products", "moderate_users", "view_reports"]
+    },
+    {
+      "id": "seller",
+      "name": "Vendeur",
+      "permissions": ["manage_own_products", "view_own_orders", "manage_own_profile"]
+    },
+    {
+      "id": "buyer",
+      "name": "Acheteur",
+      "permissions": ["place_orders", "manage_own_profile", "leave_reviews"]
+    }
+  ]
+}

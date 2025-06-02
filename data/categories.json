@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Légumes",
+    "image": "/placeholder.svg?height=200&width=200",
+    "slug": "legumes",
+    "color": "bg-green-100 dark:bg-green-900",
+    "count": 45
+  },
+  {
+    "name": "Fruits",
+    "image": "/placeholder.svg?height=200&width=200",
+    "slug": "fruits",
+    "color": "bg-orange-100 dark:bg-orange-900",
+    "count": 38
+  },
+  {
+    "name": "Céréales",
+    "image": "/placeholder.svg?height=200&width=200",
+    "slug": "cereales",
+    "color": "bg-amber-100 dark:bg-amber-900",
+    "count": 24
+  },
+  {
+    "name": "Tubercules",
+    "image": "/placeholder.svg?height=200&width=200",
+    "slug": "tubercules",
+    "color": "bg-purple-100 dark:bg-purple-900",
+    "count": 19
+  },
+  {
+    "name": "Épices",
+    "image": "/placeholder.svg?height=200&width=200",
+    "slug": "epices",
+    "color": "bg-red-100 dark:bg-red-900",
+    "count": 12
+  }
+]

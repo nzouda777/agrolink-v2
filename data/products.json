@@ -1,0 +1,275 @@
+[
+  {
+    "id": 1,
+    "name": "Tomates fraîches",
+    "description": "Tomates fraîches cultivées sans pesticides, idéales pour les salades et les sauces. Nos tomates sont récoltées à maturité pour garantir une saveur optimale et une fraîcheur exceptionnelle.",
+    "price": 1500,
+    "oldPrice": 1800,
+    "unit": "kg",
+    "quantity": 250,
+    "category": "Légumes",
+    "rating": 4.8,
+    "reviewCount": 124,
+    "seller": {
+      "id": 1,
+      "name": "Ferme Naturelle",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.9,
+      "location": "Yaoundé, Centre",
+      "memberSince": "2022",
+      "responseRate": "98%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Centre, Cameroun",
+      "freshness": "Récolté il y a 1-2 jours",
+      "cultivation": "Agriculture biologique",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver dans un endroit frais et sec"
+    },
+    "region": "Centre"
+  },
+  {
+    "id": 2,
+    "name": "Bananes plantains",
+    "description": "Bananes plantains fraîches et mûres, parfaites pour la cuisine traditionnelle. Nos plantains sont cultivés dans des conditions optimales pour garantir leur qualité et leur goût authentique.",
+    "price": 2000,
+    "unit": "régime",
+    "quantity": 150,
+    "category": "Fruits",
+    "rating": 4.5,
+    "reviewCount": 98,
+    "seller": {
+      "id": 2,
+      "name": "Agro Délices",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.7,
+      "location": "Douala, Littoral",
+      "memberSince": "2021",
+      "responseRate": "95%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Littoral, Cameroun",
+      "freshness": "Récolté il y a 2-3 jours",
+      "cultivation": "Agriculture traditionnelle",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver à température ambiante"
+    },
+    "region": "Littoral"
+  },
+  {
+    "id": 3,
+    "name": "Manioc frais",
+    "description": "Manioc frais de haute qualité, idéal pour la préparation de plats traditionnels. Notre manioc est soigneusement sélectionné pour garantir sa fraîcheur et sa saveur authentique.",
+    "price": 1200,
+    "unit": "kg",
+    "quantity": 200,
+    "category": "Tubercules",
+    "rating": 4.7,
+    "reviewCount": 87,
+    "seller": {
+      "id": 3,
+      "name": "Coopérative Agricole",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.8,
+      "location": "Bafoussam, Ouest",
+      "memberSince": "2020",
+      "responseRate": "97%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Ouest, Cameroun",
+      "freshness": "Récolté il y a 1-2 jours",
+      "cultivation": "Agriculture durable",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver dans un endroit frais et sec"
+    },
+    "region": "Ouest"
+  },
+  {
+    "id": 4,
+    "name": "Piment rouge",
+    "description": "Piment rouge frais et épicé, parfait pour ajouter de la saveur à vos plats. Nos piments sont cultivés avec soin pour garantir leur qualité et leur goût intense.",
+    "price": 800,
+    "unit": "100g",
+    "quantity": 300,
+    "category": "Épices",
+    "rating": 4.9,
+    "reviewCount": 112,
+    "seller": {
+      "id": 4,
+      "name": "Épices du Terroir",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.9,
+      "location": "Garoua, Nord",
+      "memberSince": "2021",
+      "responseRate": "99%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Nord, Cameroun",
+      "freshness": "Récolté il y a 1-2 jours",
+      "cultivation": "Agriculture traditionnelle",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver dans un endroit frais et sec"
+    },
+    "region": "Nord"
+  },
+  {
+    "id": 5,
+    "name": "Maïs frais",
+    "description": "Maïs frais et sucré, parfait pour les grillades et les salades. Notre maïs est cultivé dans des conditions optimales pour garantir sa fraîcheur et sa saveur naturelle.",
+    "price": 1000,
+    "unit": "kg",
+    "quantity": 180,
+    "category": "Céréales",
+    "rating": 4.6,
+    "reviewCount": 76,
+    "seller": {
+      "id": 5,
+      "name": "Ferme du Soleil",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.7,
+      "location": "Yaoundé, Centre",
+      "memberSince": "2022",
+      "responseRate": "96%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Centre, Cameroun",
+      "freshness": "Récolté il y a 1-2 jours",
+      "cultivation": "Agriculture durable",
+      "season": "Disponible en saison",
+      "storage": "Conserver au réfrigérateur"
+    },
+    "region": "Centre"
+  },
+  {
+    "id": 6,
+    "name": "Ananas",
+    "description": "Ananas juteux et sucrés, parfaits pour les desserts et les jus. Nos ananas sont cultivés avec soin pour garantir leur qualité et leur saveur exceptionnelle.",
+    "price": 1800,
+    "unit": "pièce",
+    "quantity": 120,
+    "category": "Fruits",
+    "rating": 4.7,
+    "reviewCount": 92,
+    "seller": {
+      "id": 6,
+      "name": "Fruits Tropicaux",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.8,
+      "location": "Douala, Littoral",
+      "memberSince": "2021",
+      "responseRate": "97%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Littoral, Cameroun",
+      "freshness": "Récolté il y a 2-3 jours",
+      "cultivation": "Agriculture durable",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver à température ambiante"
+    },
+    "region": "Littoral"
+  },
+  {
+    "id": 7,
+    "name": "Patates douces",
+    "description": "Patates douces fraîches et nutritives, idéales pour diverses préparations culinaires. Nos patates douces sont cultivées dans des conditions optimales pour garantir leur qualité et leur goût authentique.",
+    "price": 900,
+    "unit": "kg",
+    "quantity": 220,
+    "category": "Tubercules",
+    "rating": 4.5,
+    "reviewCount": 68,
+    "seller": {
+      "id": 2,
+      "name": "Agro Délices",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.7,
+      "location": "Douala, Littoral",
+      "memberSince": "2021",
+      "responseRate": "95%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Sud, Cameroun",
+      "freshness": "Récolté il y a 2-3 jours",
+      "cultivation": "Agriculture traditionnelle",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver dans un endroit frais et sec"
+    },
+    "region": "Sud"
+  },
+  {
+    "id": 8,
+    "name": "Gingembre",
+    "description": "Gingembre frais et aromatique, parfait pour les assaisonnements et les infusions. Notre gingembre est cultivé avec soin pour garantir sa qualité et son goût intense.",
+    "price": 1500,
+    "unit": "kg",
+    "quantity": 150,
+    "category": "Épices",
+    "rating": 4.8,
+    "reviewCount": 84,
+    "seller": {
+      "id": 4,
+      "name": "Épices du Terroir",
+      "image": "/placeholder.svg?height=50&width=50",
+      "rating": 4.9,
+      "location": "Garoua, Nord",
+      "memberSince": "2021",
+      "responseRate": "99%"
+    },
+    "images": [
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600",
+      "/placeholder.svg?height=600&width=600"
+    ],
+    "details": {
+      "origin": "Région Ouest, Cameroun",
+      "freshness": "Récolté il y a 1-2 jours",
+      "cultivation": "Agriculture biologique",
+      "season": "Disponible toute l'année",
+      "storage": "Conserver dans un endroit frais et sec"
+    },
+    "region": "Ouest"
+  }
+]

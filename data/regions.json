@@ -1,0 +1,12 @@
+[
+  { "name": "Centre", "count": 56 },
+  { "name": "Littoral", "count": 48 },
+  { "name": "Ouest", "count": 37 },
+  { "name": "Nord", "count": 29 },
+  { "name": "Sud", "count": 25 },
+  { "name": "Est", "count": 18 },
+  { "name": "Extrême-Nord", "count": 15 },
+  { "name": "Nord-Ouest", "count": 12 },
+  { "name": "Sud-Ouest", "count": 10 },
+  { "name": "Adamaoua", "count": 8 }
+]

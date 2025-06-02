@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "productId": 1,
+    "user": {
+      "name": "Jean Dupont",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "15/03/2023",
+    "comment": "Excellentes tomates, très fraîches et savoureuses. La livraison a été rapide et le produit était bien emballé. Je recommande vivement ce vendeur !"
+  },
+  {
+    "id": 2,
+    "productId": 1,
+    "user": {
+      "name": "Marie Koné",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 4,
+    "date": "02/03/2023",
+    "comment": "Bonnes tomates, mais quelques-unes étaient un peu abîmées lors de la livraison. Cependant, le goût est excellent et le prix est raisonnable."
+  },
+  {
+    "id": 3,
+    "productId": 1,
+    "user": {
+      "name": "Paul Biya",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "25/02/2023",
+    "comment": "Je suis très satisfait de mon achat. Les tomates sont juteuses et parfaites pour mes salades. Je vais certainement commander à nouveau."
+  },
+  {
+    "id": 4,
+    "productId": 2,
+    "user": {
+      "name": "Sophie Mbarga",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "10/03/2023",
+    "comment": "Les bananes plantains étaient parfaites ! Mûres à point et très savoureuses. Livraison rapide et service client excellent."
+  },
+  {
+    "id": 5,
+    "productId": 2,
+    "user": {
+      "name": "Pierre Kamga",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 4,
+    "date": "28/02/2023",
+    "comment": "Bonne qualité de plantains, mais le régime était un peu plus petit que prévu. Néanmoins, le goût était excellent."
+  },
+  {
+    "id": 6,
+    "productId": 3,
+    "user": {
+      "name": "Jeanne Ngo",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "05/03/2023",
+    "comment": "Le manioc était frais et de très bonne qualité. Parfait pour préparer du bobolo. Je recommande vivement ce vendeur !"
+  },
+  {
+    "id": 7,
+    "productId": 3,
+    "user": {
+      "name": "Michel Essomba",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 4,
+    "date": "20/02/2023",
+    "comment": "Bon manioc, mais la livraison a pris un peu plus de temps que prévu. Heureusement, le produit était toujours frais à l'arrivée."
+  },
+  {
+    "id": 8,
+    "productId": 4,
+    "user": {
+      "name": "Carine Fouda",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "12/03/2023",
+    "comment": "Ces piments sont incroyablement frais et épicés ! Exactement ce que je cherchais pour mes sauces. Livraison rapide et emballage soigné."
+  },
+  {
+    "id": 9,
+    "productId": 4,
+    "user": {
+      "name": "Thomas Ndongo",
+      "image": "/placeholder.svg?height=40&width=40"
+    },
+    "rating": 5,
+    "date": "01/03/2023",
+    "comment": "Piments de très haute qualité. Ils ajoutent une saveur incroyable à mes plats. Je vais certainement en commander à nouveau."
+  }
+]

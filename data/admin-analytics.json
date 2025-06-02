@@ -1,0 +1,40 @@
+{
+  "overview": {
+    "totalRevenue": 2847593.45,
+    "totalOrders": 45678,
+    "totalUsers": 15847,
+    "totalProducts": 8934,
+    "growthRate": 12.5,
+    "conversionRate": 3.2
+  },
+  "revenueData": [
+    { "month": "Jan", "revenue": 234567, "orders": 3456 },
+    { "month": "Feb", "revenue": 245678, "orders": 3678 },
+    { "month": "Mar", "revenue": 256789, "orders": 3890 },
+    { "month": "Apr", "revenue": 267890, "orders": 4012 },
+    { "month": "May", "revenue": 278901, "orders": 4234 },
+    { "month": "Jun", "revenue": 289012, "orders": 4456 }
+  ],
+  "userGrowth": [
+    { "month": "Jan", "buyers": 1200, "sellers": 150 },
+    { "month": "Feb", "buyers": 1350, "sellers": 175 },
+    { "month": "Mar", "buyers": 1500, "sellers": 200 },
+    { "month": "Apr", "buyers": 1650, "sellers": 225 },
+    { "month": "May", "buyers": 1800, "sellers": 250 },
+    { "month": "Jun", "buyers": 1950, "sellers": 275 }
+  ],
+  "topCategories": [
+    { "name": "Légumes", "sales": 45678, "percentage": 35.2 },
+    { "name": "Fruits", "sales": 32456, "percentage": 25.1 },
+    { "name": "Produits laitiers", "sales": 23456, "percentage": 18.1 },
+    { "name": "Viandes", "sales": 15678, "percentage": 12.1 },
+    { "name": "Autres", "sales": 12345, "percentage": 9.5 }
+  ],
+  "topRegions": [
+    { "name": "Île-de-France", "orders": 8934, "revenue": 567890 },
+    { "name": "Provence-Alpes-Côte d'Azur", "orders": 6789, "revenue": 456789 },
+    { "name": "Nouvelle-Aquitaine", "orders": 5678, "revenue": 345678 },
+    { "name": "Occitanie", "orders": 4567, "revenue": 234567 },
+    { "name": "Auvergne-Rhône-Alpes", "orders": 3456, "revenue": 123456 }
+  ]
+}

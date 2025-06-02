@@ -1,0 +1,77 @@
+{
+  "orders": [
+    {
+      "id": "order_001",
+      "orderNumber": "AGR-2024-001234",
+      "buyer": "Marie Dubois",
+      "buyerId": "user_001",
+      "seller": "Ferme Martin",
+      "sellerId": "user_002",
+      "status": "completed",
+      "total": 45.67,
+      "paymentStatus": "paid",
+      "paymentMethod": "card",
+      "createdAt": "2024-01-14T15:30:00Z",
+      "completedAt": "2024-01-15T10:45:00Z",
+      "items": [
+        {
+          "productId": "prod_001",
+          "name": "Tomates bio",
+          "quantity": 2,
+          "price": 15.5
+        },
+        {
+          "productId": "prod_002",
+          "name": "Salade verte",
+          "quantity": 3,
+          "price": 4.89
+        }
+      ]
+    },
+    {
+      "id": "order_002",
+      "orderNumber": "AGR-2024-001235",
+      "buyer": "Jean Martin",
+      "buyerId": "user_004",
+      "seller": "Ferme Leclerc",
+      "sellerId": "user_005",
+      "status": "pending",
+      "total": 78.9,
+      "paymentStatus": "pending",
+      "paymentMethod": "bank_transfer",
+      "createdAt": "2024-01-15T11:20:00Z",
+      "items": [
+        {
+          "productId": "prod_003",
+          "name": "Pommes de terre",
+          "quantity": 5,
+          "price": 12.5
+        }
+      ]
+    },
+    {
+      "id": "order_003",
+      "orderNumber": "AGR-2024-001236",
+      "buyer": "Sophie Blanc",
+      "buyerId": "user_006",
+      "seller": "Ferme Bio",
+      "sellerId": "user_007",
+      "status": "cancelled",
+      "total": 23.45,
+      "paymentStatus": "refunded",
+      "paymentMethod": "card",
+      "createdAt": "2024-01-13T09:15:00Z",
+      "cancelledAt": "2024-01-14T16:30:00Z",
+      "cancellationReason": "Product unavailable"
+    }
+  ],
+  "paymentStats": {
+    "totalTransactions": 1234,
+    "successfulPayments": 1156,
+    "failedPayments": 78,
+    "pendingPayments": 45,
+    "refunds": 23,
+    "totalVolume": 156789.45,
+    "averageTransaction": 127.15
+  }
+}

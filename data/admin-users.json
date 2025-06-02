@@ -1,0 +1,71 @@
+{
+  "users": [
+    {
+      "id": "user_001",
+      "name": "Marie Dubois",
+      "email": "marie.dubois@email.com",
+      "type": "buyer",
+      "status": "active",
+      "registeredAt": "2024-01-10T14:30:00Z",
+      "lastLogin": "2024-01-15T09:45:00Z",
+      "totalOrders": 12,
+      "totalSpent": 456.78,
+      "verified": true,
+      "location": "Paris, France"
+    },
+    {
+      "id": "user_002",
+      "name": "Ferme Martin",
+      "email": "contact@ferme-martin.fr",
+      "type": "seller",
+      "status": "active",
+      "registeredAt": "2023-12-15T10:00:00Z",
+      "lastLogin": "2024-01-15T08:30:00Z",
+      "totalProducts": 25,
+      "totalSales": 15678.9,
+      "verified": true,
+      "location": "Normandie, France",
+      "subscription": "premium"
+    },
+    {
+      "id": "user_003",
+      "name": "Pierre Durand",
+      "email": "pierre.durand@email.com",
+      "type": "buyer",
+      "status": "suspended",
+      "registeredAt": "2024-01-05T16:20:00Z",
+      "lastLogin": "2024-01-12T12:15:00Z",
+      "totalOrders": 3,
+      "totalSpent": 89.45,
+      "verified": false,
+      "location": "Lyon, France",
+      "suspensionReason": "Multiple payment failures"
+    }
+  ],
+  "pendingProducts": [
+    {
+      "id": "prod_pending_001",
+      "name": "Tomates cerises bio",
+      "seller": "Ferme Leclerc",
+      "sellerId": "seller_456",
+      "category": "Légumes",
+      "price": 4.5,
+      "submittedAt": "2024-01-15T10:30:00Z",
+      "status": "pending_review",
+      "images": 3,
+      "description": "Tomates cerises biologiques cultivées sans pesticides"
+    },
+    {
+      "id": "prod_pending_002",
+      "name": "Miel de lavande",
+      "seller": "Rucher des Alpes",
+      "sellerId": "seller_789",
+      "category": "Produits transformés",
+      "price": 12.0,
+      "submittedAt": "2024-01-15T09:15:00Z",
+      "status": "pending_review",
+      "images": 2,
+      "description": "Miel artisanal de lavande des Alpes"
+    }
+  ]
+}
