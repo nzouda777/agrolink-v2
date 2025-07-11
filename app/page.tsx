@@ -81,7 +81,7 @@ export default function Home() {
           </div>
           <div className="relative h-[300px] md:h-[400px] rounded-lg overflow-hidden">
             <Image
-              src="/placeholder.svg?height=400&width=600"
+              src="https://img.freepik.com/free-photo/fresh-vegetables-fruit-market-stall_1101-2560.jpg"
               alt="Produits agricoles frais"
               fill
               className="object-cover"

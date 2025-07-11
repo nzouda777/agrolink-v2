@@ -1,35 +1,35 @@
 [
   {
     "name": "Légumes",
-    "image": "/placeholder.svg?height=200&width=200",
+    "image": "https://st2.depositphotos.com/16122460/43420/i/450/depositphotos_434200088-stock-photo-different-fresh-vegetables-background-closeup.jpg",
     "slug": "legumes",
     "color": "bg-green-100 dark:bg-green-900",
     "count": 45
   },
   {
     "name": "Fruits",
-    "image": "/placeholder.svg?height=200&width=200",
+    "image": "https://st.depositphotos.com/1593759/2652/i/450/depositphotos_26521407-stock-photo-set-of-different-fruits-and.jpg",
     "slug": "fruits",
     "color": "bg-orange-100 dark:bg-orange-900",
     "count": 38
   },
   {
     "name": "Céréales",
-    "image": "/placeholder.svg?height=200&width=200",
+    "image": "https://st.depositphotos.com/1002962/1980/i/600/depositphotos_19806585-stock-photo-assorted-edible-seeds-with-wheat.jpg",
     "slug": "cereales",
     "color": "bg-amber-100 dark:bg-amber-900",
     "count": 24
   },
   {
     "name": "Tubercules",
-    "image": "/placeholder.svg?height=200&width=200",
+    "image": "https://st5.depositphotos.com/13684278/72750/i/600/depositphotos_727500882-stock-photo-cassava-roots-sustainable-agriculture-cassava.jpg",
     "slug": "tubercules",
     "color": "bg-purple-100 dark:bg-purple-900",
     "count": 19
   },
   {
     "name": "Épices",
-    "image": "/placeholder.svg?height=200&width=200",
+    "image": "https://st.depositphotos.com/1056373/2372/i/600/depositphotos_23720143-stock-photo-spices-and-herbs-isolated-on.jpg",
     "slug": "epices",
     "color": "bg-red-100 dark:bg-red-900",
     "count": 12
