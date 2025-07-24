@@ -1,0 +1,40 @@
+{
+  "overview": {
+    "totalRevenue": 76200,
+    "totalOrders": 38,
+    "averageOrderValue": 2005,
+    "conversionRate": 7.3,
+    "topProduct": "Tomates Bio"
+  },
+  "monthlyData": [
+    { "month": "Jan", "revenue": 76200, "orders": 38, "customers": 28 },
+    { "month": "Déc", "revenue": 68500, "orders": 34, "customers": 25 },
+    { "month": "Nov", "revenue": 72100, "orders": 36, "customers": 27 },
+    { "month": "Oct", "revenue": 65800, "orders": 32, "customers": 24 },
+    { "month": "Sep", "revenue": 58900, "orders": 29, "customers": 22 },
+    { "month": "Aoû", "revenue": 71200, "orders": 35, "customers": 26 }
+  ],
+  "productPerformance": [
+    {
+      "name": "Tomates Bio",
+      "revenue": 45000,
+      "orders": 18,
+      "views": 245,
+      "conversionRate": 7.3
+    },
+    {
+      "name": "Carottes Orange",
+      "revenue": 21600,
+      "orders": 12,
+      "views": 189,
+      "conversionRate": 6.3
+    },
+    {
+      "name": "Pommes de Terre",
+      "revenue": 9600,
+      "orders": 8,
+      "views": 156,
+      "conversionRate": 5.1
+    }
+  ]
+}

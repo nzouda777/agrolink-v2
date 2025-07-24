@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -12,24 +12,32 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Star, Truck, ShieldCheck, Heart, Share2, MapPin, Phone, Mail, ChevronRight, Minus, Plus } from "lucide-react"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { productsData, reviewsData } from "@/data"
-import type { Product, Review } from "@/types"
+import type { Product, Review, Category } from "@/types"
+
+interface ProductWithCategory extends Product {
+  category: Category | string
+}
+import axios from "axios"
 
 export default function ProductPage({ params }: { params: { id: string } }) {
-  const [product, setProduct] = useState<Product | null>(null)
+  const [product, setProduct] = useState<ProductWithCategory | null>(null)
   const [reviews, setReviews] = useState<Review[]>([])
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
+  const unwrappedParams = use(params) as { id: string }
 
   useEffect(() => {
     const loadData = async () => {
       try {
         // Simuler un délai réseau
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        const id = Number.parseInt(params.id)
-        const foundProduct = productsData.find((p) => p.id === id)
-
+        // await new Promise((resolve) => setTimeout(resolve, 800))
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${unwrappedParams.id}`)
+        const data = response.data
+        console.log(data)
+        const id = Number.parseInt(unwrappedParams.id)
+        const foundProduct = data
+        console.log("founding product....",foundProduct)
         if (foundProduct) {
           setProduct(foundProduct)
 
@@ -49,7 +57,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
     }
 
     loadData()
-  }, [params.id])
+  }, [unwrappedParams.id])
 
   const incrementQuantity = () => {
     if (product && quantity < product.quantity) {
@@ -98,8 +106,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             Produits
           </Link>
           <ChevronRight className="h-4 w-4 mx-1" />
-          <Link href={`/products/category/${product.category.toLowerCase()}`} className="hover:text-foreground">
-            {product.category}
+          <Link href={`/products/category/${typeof product.category === 'object' ? product.category.slug : product.category.toLowerCase()}`} className="hover:text-foreground">
+            {typeof product.category === 'object' ? product.category.name : product.category}
           </Link>
           <ChevronRight className="h-4 w-4 mx-1" />
           <span className="font-medium text-foreground">{product.name}</span>
@@ -110,13 +118,13 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           {/* Product Images */}
           <div className="space-y-4">
             <div className="aspect-square relative rounded-lg overflow-hidden border">
-              <Image src={product.images[0] || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
+              <Image src={process.env.NEXT_PUBLIC_URL +"storage/"+ product.images?.[0]?.image_url || "/placeholder.svg"} alt={product.name} fill className="object-cover" />
             </div>
             <div className="grid grid-cols-4 gap-2">
               {product.images.map((image, index) => (
                 <div key={index} className="aspect-square relative rounded-md overflow-hidden border">
                   <Image
-                    src={image || "/placeholder.svg"}
+                    src={process.env.NEXT_PUBLIC_URL +"storage/"+ image.image_url || "/placeholder.svg"}
                     alt={`${product.name} - Image ${index + 1}`}
                     fill
                     className="object-cover"
@@ -130,7 +138,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
           <div className="space-y-6">
             <div>
               <div className="flex items-center gap-2 mb-2">
-                <Badge>{product.category}</Badge>
+                <Badge>{product.category?.name}</Badge>
                 <Badge
                   variant="outline"
                   className="text-amber-500 border-amber-200 bg-amber-50 dark:bg-amber-950 dark:border-amber-800"
@@ -233,7 +241,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
               <div>
                 <h3 className="text-lg font-medium mb-4">Caractéristiques du produit</h3>
                 <ul className="space-y-2">
-                  {Object.entries(product.details).map(([key, value]) => (
+                  {product?.details && Object.entries(product.details).map(([key, value]) => (
                     <li key={key} className="flex justify-between py-2 border-b last:border-0">
                       <span className="text-muted-foreground capitalize">{key}</span>
                       <span>{value}</span>
@@ -424,7 +432,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                 <Card key={product.id} className="overflow-hidden group">
                   <div className="aspect-square relative">
                     <Image
-                      src={product.images[0] || "/placeholder.svg"}
+                      src={process.env.NEXT_PUBLIC_URL +"storage/"+ product.images?.[0]?.image_url || "/placeholder.svg?height=200&width=200"}
+              
                       alt={product.name}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"

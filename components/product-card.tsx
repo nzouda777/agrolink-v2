@@ -44,13 +44,14 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="aspect-square relative">
         <Link href={`/products/${product.id}`}>
           <Image
-            src={product.images[0] || "/placeholder.svg"}
+            src={process.env.NEXT_PUBLIC_URL +"storage/"+ product.images?.[0]?.image_url || "/placeholder.svg?height=200&width=200"}
+                  
             alt={product.name}
             fill
             className="object-cover transition-transform group-hover:scale-105"
           />
         </Link>
-        <Badge className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm text-black hover:text-white">{product.category}</Badge>
+        <Badge className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm text-black hover:text-white">{product.category.name}</Badge>
         {isMounted && (
           <Button
             variant="ghost"

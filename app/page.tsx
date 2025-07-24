@@ -9,8 +9,9 @@ import { Badge } from "@/components/ui/badge"
 import { Leaf, TrendingUp, ShieldCheck, Truck, ChevronRight } from "lucide-react"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import ProductCard from "@/components/product-card"
-import { categoriesData, productsData, regionsData } from "@/data"
+import { categoriesData, regionsData } from "@/data"
 import type { Product, Category, Region } from "@/types"
+import axios from 'axios'
 
 export default function Home() {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
@@ -27,16 +28,19 @@ export default function Home() {
     const loadData = async () => {
       try {
         // Simuler un délai réseau
-        await new Promise((resolve) => setTimeout(resolve, 800))
+        // await new Promise((resolve) => setTimeout(resolve, 800))
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`)
+        const data = response.data.data
+        console.log(data)
 
         // Charger les données directement depuis les fichiers importés
         setCategories(categoriesData)
-        setFeaturedProducts(productsData.slice(0, 4)) // Prendre les 4 premiers produits comme produits en vedette
+        setFeaturedProducts(data.slice(0, 4)) // Prendre les 4 premiers produits comme produits en vedette
         setRegions(regionsData)
 
         console.log("Données chargées:", {
           categories: categoriesData,
-          featuredProducts: productsData.slice(0, 4),
+          featuredProducts: data.slice(0, 4),
           regions: regionsData,
         })
       } catch (error) {

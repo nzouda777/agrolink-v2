@@ -1,0 +1,87 @@
+[
+  {
+    "id": "ORD-001",
+    "buyerName": "Marie Dubois",
+    "buyerEmail": "marie.dubois@email.com",
+    "buyerPhone": "+33 6 12 34 56 78",
+    "products": [
+      {
+        "id": "1",
+        "name": "Tomates Bio",
+        "quantity": 5,
+        "price": 2500,
+        "total": 12500
+      }
+    ],
+    "total": 12500,
+    "status": "pending",
+    "paymentStatus": "paid",
+    "shippingAddress": {
+      "street": "123 Rue de la Paix",
+      "city": "Paris",
+      "postalCode": "75001",
+      "country": "France"
+    },
+    "createdAt": "2024-01-22T10:30:00Z",
+    "expectedDelivery": "2024-01-25T00:00:00Z"
+  },
+  {
+    "id": "ORD-002",
+    "buyerName": "Jean Martin",
+    "buyerEmail": "jean.martin@email.com",
+    "buyerPhone": "+33 6 98 76 54 32",
+    "products": [
+      {
+        "id": "2",
+        "name": "Carottes Orange",
+        "quantity": 3,
+        "price": 1800,
+        "total": 5400
+      },
+      {
+        "id": "1",
+        "name": "Tomates Bio",
+        "quantity": 2,
+        "price": 2500,
+        "total": 5000
+      }
+    ],
+    "total": 10400,
+    "status": "processing",
+    "paymentStatus": "paid",
+    "shippingAddress": {
+      "street": "456 Avenue des Champs",
+      "city": "Lyon",
+      "postalCode": "69001",
+      "country": "France"
+    },
+    "createdAt": "2024-01-21T14:15:00Z",
+    "expectedDelivery": "2024-01-24T00:00:00Z"
+  },
+  {
+    "id": "ORD-003",
+    "buyerName": "Sophie Laurent",
+    "buyerEmail": "sophie.laurent@email.com",
+    "buyerPhone": "+33 6 11 22 33 44",
+    "products": [
+      {
+        "id": "1",
+        "name": "Tomates Bio",
+        "quantity": 10,
+        "price": 2500,
+        "total": 25000
+      }
+    ],
+    "total": 25000,
+    "status": "delivered",
+    "paymentStatus": "paid",
+    "shippingAddress": {
+      "street": "789 Boulevard Saint-Germain",
+      "city": "Marseille",
+      "postalCode": "13001",
+      "country": "France"
+    },
+    "createdAt": "2024-01-18T09:45:00Z",
+    "deliveredAt": "2024-01-20T16:30:00Z"
+  }
+]

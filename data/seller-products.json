@@ -1,0 +1,50 @@
+[
+  {
+    "id": "1",
+    "name": "Tomates Bio",
+    "category": "Légumes",
+    "price": 2500,
+    "stock": 150,
+    "unit": "kg",
+    "status": "active",
+    "images": ["/placeholder.svg?height=200&width=200"],
+    "description": "Tomates biologiques fraîches cultivées sans pesticides",
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-20T14:30:00Z",
+    "views": 245,
+    "orders": 18,
+    "revenue": 45000
+  },
+  {
+    "id": "2",
+    "name": "Carottes Orange",
+    "category": "Légumes",
+    "price": 1800,
+    "stock": 200,
+    "unit": "kg",
+    "status": "active",
+    "images": ["/placeholder.svg?height=200&width=200"],
+    "description": "Carottes orange croquantes et sucrées",
+    "createdAt": "2024-01-10T08:00:00Z",
+    "updatedAt": "2024-01-18T16:45:00Z",
+    "views": 189,
+    "orders": 12,
+    "revenue": 21600
+  },
+  {
+    "id": "3",
+    "name": "Pommes de Terre",
+    "category": "Légumes",
+    "price": 1200,
+    "stock": 0,
+    "unit": "kg",
+    "status": "out_of_stock",
+    "images": ["/placeholder.svg?height=200&width=200"],
+    "description": "Pommes de terre polyvalentes pour tous vos plats",
+    "createdAt": "2024-01-05T12:00:00Z",
+    "updatedAt": "2024-01-22T09:15:00Z",
+    "views": 156,
+    "orders": 8,
+    "revenue": 9600
+  }
+]

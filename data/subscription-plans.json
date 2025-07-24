@@ -1,0 +1,54 @@
+[
+  {
+    "id": "basic",
+    "name": "Plan Basique",
+    "price": 0,
+    "currency": "FCFA",
+    "interval": "month",
+    "features": ["Jusqu'à 10 produits", "Support par email", "Tableau de bord basique", "Commission de 5%"],
+    "limits": {
+      "products": 10,
+      "orders": 50,
+      "storage": "1GB"
+    }
+  },
+  {
+    "id": "pro",
+    "name": "Plan Professionnel",
+    "price": 15000,
+    "currency": "FCFA",
+    "interval": "month",
+    "features": [
+      "Produits illimités",
+      "Support prioritaire",
+      "Analytics avancées",
+      "Commission de 3%",
+      "Outils marketing"
+    ],
+    "limits": {
+      "products": "unlimited",
+      "orders": "unlimited",
+      "storage": "10GB"
+    },
+    "popular": true
+  },
+  {
+    "id": "enterprise",
+    "name": "Plan Entreprise",
+    "price": 35000,
+    "currency": "FCFA",
+    "interval": "month",
+    "features": [
+      "Tout du plan Pro",
+      "Support dédié",
+      "API personnalisée",
+      "Commission de 2%",
+      "Formation personnalisée"
+    ],
+    "limits": {
+      "products": "unlimited",
+      "orders": "unlimited",
+      "storage": "unlimited"
+    }
+  }
+]
