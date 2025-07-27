@@ -12,11 +12,14 @@ import { Switch } from "@/components/ui/switch"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { User, Building, CreditCard, Settings, Camera, MapPin, Calendar, Star, Shield, Bell } from "lucide-react"
+import axios from "axios"
+import process from "process"
+import { useAuthStore } from '@/stores/auth-store';
 
 interface ProfileData {
   personalInfo: {
     id: string
-    firstName: string
+    name: string
     lastName: string
     email: string
     phone: string
@@ -40,9 +43,9 @@ interface ProfileData {
     certifications: string[]
   }
   bankInfo: {
-    bankName: string
+    api_key: string
     accountNumber: string
-    accountHolder: string
+    api_secret: string
     iban: string
   }
   preferences: {
@@ -69,42 +72,228 @@ export default function ProfilePage() {
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [activeTab, setActiveTab] = useState("personal")
+  const [activeTab, setActiveTab] = useState("personal");
+  const id = useAuthStore((state) => state.user?.id);
 
   useEffect(() => {
-    fetchProfile()
-  }, [])
+    if (id) {
+      fetchProfile();
+    }
+  }, [id]);
 
   const fetchProfile = async () => {
+    if (!id) return;
+    
+    setLoading(true);
     try {
-      const response = await fetch("/api/seller/profile")
-      if (response.ok) {
-        const data = await response.json()
-        setProfile(data)
-      }
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`,
+          'Accept': 'application/json'
+        } 
+      });
+      const userData = response.data || response.data;
+      console.log(userData)
+      // Transform the API response to match the expected profile data structure
+      const profileData: ProfileData = {
+        personalInfo: {
+          id: userData.id.toString(),
+          name: userData.name || '',
+          lastName: userData.last_name || '',
+          email: userData.email || '',
+          phone: userData.phone || '',
+          avatar: userData.avatar || '/placeholder.svg',
+          joinDate: userData.created_at || new Date().toISOString(),
+          lastLogin: userData.last_login_at || new Date().toISOString(),
+        },
+        businessInfo: {
+          businessName: userData.business_name || '',
+          businessType: userData.type?.name || '',
+          description: userData.bio || '',
+          address: {
+            street: userData.address?.street || '',
+            city: userData.city?.name || '',
+            region: userData.city?.region || '',
+            country: 'Sénégal',
+            postalCode: userData.address?.postal_code || '',
+          },
+          taxNumber: userData.tax_number || '',
+          businessLicense: userData.business_license || '',
+          certifications: userData.certifications?.map((c: any) => c.name) || [],
+        },
+        bankInfo: {
+          api_key: userData.payment_api_key || '',
+          accountNumber: userData.bank_account_number || '',
+          api_secret: userData.payment_api_secret || '',
+          iban: userData.iban || ''
+        },
+        preferences: {
+          language: userData.language || 'fr',
+          currency: userData.currency || 'XOF',
+          timezone: userData.timezone || 'Africa/Dakar',
+          notifications: {
+            email: userData.notification_preferences?.email ?? true,
+            sms: userData.notification_preferences?.sms ?? true,
+            push: userData.notification_preferences?.push ?? true,
+            marketing: userData.notification_preferences?.marketing ?? false,
+          },
+        },
+        stats: {
+          totalProducts: userData.products_count || 0,
+          totalOrders: userData.orders_count || 0,
+          totalRevenue: userData.total_revenue || 0,
+          rating: parseFloat(userData.average_rating) || 0,
+          reviewsCount: userData.reviews_count || 0,
+        }
+      };
+      
+      setProfile(profileData);
     } catch (error) {
-      console.error("Erreur lors du chargement du profil:", error)
+      console.error("Erreur lors du chargement du profil:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
-  const handleSave = async (section: string, data: any) => {
-    setSaving(true)
+  const handleSave = async (section: string, formData: any) => {
+    if (!id) return;
+    
+    setSaving(true);
     try {
-      const response = await fetch("/api/seller/profile", {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ section, data }),
-      })
+      // Transform data based on section
+      let dataToSend: any = {};
+      
+      if (section === 'personal') {
+        dataToSend = {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          email: formData.email,
+          phone: formData.phone,
+          avatar: formData.avatar
+        };
+      } else if (section === 'business') {
+        dataToSend = {
+          business_name: formData.businessName,
+          type_id: formData.businessTypeId, // Assuming you have type_id in your form
+          bio: formData.description,
+          address: formData.address?.street ? {
+            street: formData.address.street,
+            city: formData.address.city,
+            region: formData.address.region,
+            postal_code: formData.address.postalCode,
+            country: 'Sénégal'
+          } : undefined,
+          tax_number: formData.taxNumber,
+          business_license: formData.businessLicense,
+          certifications: formData.certifications?.map((name: string) => ({ name }))
+        };
+      } else if (section === 'banking') {
+        dataToSend = {
+          payment_api_key: formData.api_key,
+          payment_api_secret: formData.api_secret,
+          bank_account_number: formData.accountNumber,
+          iban: formData.iban
+        };
+      } else if (section === 'settings') {
+        dataToSend = {
+          language: formData.language,
+          currency: formData.currency,
+          timezone: formData.timezone,
+          notification_preferences: formData.notifications
+        };
+      }
 
-      if (response.ok) {
-        await fetchProfile()
+      // Remove undefined values from the payload
+      Object.keys(dataToSend).forEach(key => {
+        if (dataToSend[key] === undefined) {
+          delete dataToSend[key];
+        }
+      });
+
+      // Send the update request
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/users/${id}`, dataToSend, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      });
+
+      // Refresh the profile data
+      await fetchProfile();
+      
+      // Show success message (you can replace this with a toast notification)
+      console.log('Profile updated successfully');
+      
+    } catch (error: any) {
+      console.error('Error saving profile:', error);
+      if (error.response?.data) {
+        console.error('Server error:', error.response.data);
+        // You can show this error to the user
+        if (error.response.data.errors) {
+          // Handle validation errors
+          console.error('Validation errors:', error.response.data.errors);
+        }
+      }
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  const handleSavePayment = async () => {
+    if (!profile) return;
+    
+    setSaving(true);
+    try {
+      // Get the API key and secret from the form inputs
+      const apiKeyInput = document.getElementById('api_key') as HTMLInputElement;
+      const apiSecretInput = document.getElementById('api_secret') as HTMLInputElement;
+      
+      if (!apiKeyInput || !apiSecretInput) {
+        throw new Error('Could not find payment form inputs');
+      }
+
+      const paymentData = {
+        user_id: profile.personalInfo.id,
+        provider: 'agro_pay', // or get this from a select input if you have multiple providers
+        api_key: apiKeyInput.value,
+        api_secret: apiSecretInput.value,
+        is_live: true
+      };
+
+      // Send the request to create/update the payment API key
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/payment-api-keys`,
+        paymentData,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        }
+      );
+
+      if (response.status === 200 || response.status === 201) {
+        // Update the local profile state with the new payment info
+        setProfile(prev => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            bankInfo: {
+              ...prev.bankInfo,
+              api_key: paymentData.api_key,
+              api_secret: paymentData.api_secret
+            }
+          };
+        });
+        
+        // Show success message (you can replace this with a toast notification)
+        console.log('Payment information saved successfully');
       }
     } catch (error) {
-      console.error("Erreur lors de la sauvegarde:", error)
+      console.error("Error saving payment information:", error);
+      // You can add error handling here (e.g., show error message to user)
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
   }
 
@@ -135,8 +324,7 @@ export default function ProfilePage() {
               <Avatar className="h-24 w-24">
                 <AvatarImage src={profile.personalInfo.avatar || "/placeholder.svg"} />
                 <AvatarFallback className="text-lg">
-                  {profile.personalInfo.firstName[0]}
-                  {profile.personalInfo.lastName[0]}
+                  {profile.personalInfo.name}
                 </AvatarFallback>
               </Avatar>
               <Button size="sm" className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full p-0">
@@ -145,7 +333,7 @@ export default function ProfilePage() {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl font-bold">
-                {profile.personalInfo.firstName} {profile.personalInfo.lastName}
+                {profile.personalInfo.name} 
               </h2>
               <p className="text-muted-foreground">{profile.businessInfo.businessName}</p>
               <div className="flex items-center space-x-4 mt-2">
@@ -178,7 +366,7 @@ export default function ProfilePage() {
           </TabsTrigger>
           <TabsTrigger value="banking" className="flex items-center space-x-2">
             <CreditCard className="h-4 w-4" />
-            <span>Bancaire</span>
+            <span>Paiement</span>
           </TabsTrigger>
           <TabsTrigger value="settings" className="flex items-center space-x-2">
             <Settings className="h-4 w-4" />
@@ -195,16 +383,12 @@ export default function ProfilePage() {
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="firstName">Prénom</Label>
-                  <Input id="firstName" defaultValue={profile.personalInfo.firstName} />
+                  <Label htmlFor="firstName">Noms & Prénoms</Label>
+                  <Input id="firstName" defaultValue={profile.personalInfo.name} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="lastName">Nom</Label>
-                  <Input id="lastName" defaultValue={profile.personalInfo.lastName} />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" defaultValue={profile.personalInfo.email} />
+                  <Label htmlFor="lastName">Email</Label>
+                  <Input id="lastName" defaultValue={profile.personalInfo.email} />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="phone">Téléphone</Label>
@@ -309,30 +493,30 @@ export default function ProfilePage() {
         <TabsContent value="banking" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Informations Bancaires</CardTitle>
+              <CardTitle>Informations de Paiements</CardTitle>
               <CardDescription>Gérez vos informations de paiement</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="bankName">Nom de la banque</Label>
-                  <Input id="bankName" defaultValue={profile.bankInfo.bankName} />
+                  <Label htmlFor="api_key">API key</Label>
+                  <Input id="api_key" defaultValue={profile.bankInfo.api_key} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="accountHolder">Titulaire du compte</Label>
-                  <Input id="accountHolder" defaultValue={profile.bankInfo.accountHolder} />
+                  <Label htmlFor="api_secret">API secret</Label>
+                  <Input id="api_secret" defaultValue={profile.bankInfo.api_secret} />
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="accountNumber">Numéro de compte</Label>
                   <Input id="accountNumber" defaultValue={profile.bankInfo.accountNumber} type="password" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="iban">IBAN</Label>
                   <Input id="iban" defaultValue={profile.bankInfo.iban} />
-                </div>
+                </div> */}
               </div>
               <div className="flex justify-end pt-4 border-t">
-                <Button onClick={() => handleSave("banking", {})} disabled={saving}>
+                <Button onClick={() => handleSavePayment()} disabled={saving}>
                   {saving ? <LoadingSpinner className="h-4 w-4" /> : "Sauvegarder"}
                 </Button>
               </div>

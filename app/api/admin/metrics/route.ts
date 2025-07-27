@@ -83,7 +83,7 @@ export async function GET() {
         type: "order_completed",
         description: "Commande terminée",
         timestamp: "2024-01-15T11:00:00Z",
-        details: "Commande #12345 - 89.50FCFA",
+        details: "Commande #12345 - 89.50€",
       },
     ],
   }

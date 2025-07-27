@@ -22,6 +22,8 @@ import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import ProductCard from "@/components/product-card"
 import { categoriesData, productsData, regionsData } from "@/data"
 import type { Product, Category, Region } from "@/types"
+import axios from 'axios'
+
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -33,14 +35,15 @@ export default function ProductsPage() {
     const loadData = async () => {
       try {
         // Simuler un délai réseau
-        await new Promise((resolve) => setTimeout(resolve, 800))
-
-        setProducts(productsData)
+        // await new Promise((resolve) => setTimeout(resolve, 800))
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL || ""}/products`)
+        const data = response.data
+        setProducts(data.data)
         setCategories(categoriesData)
         setRegions(regionsData)
 
         console.log("Données chargées:", {
-          products: productsData,
+          products: data.data,
           categories: categoriesData,
           regions: regionsData,
         })

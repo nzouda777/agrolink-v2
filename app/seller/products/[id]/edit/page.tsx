@@ -598,7 +598,7 @@ export default function EditProductPage({ params }: { params: { id: string } }) 
                       <div key={index} className="relative">
                         <div className="aspect-square w-24 rounded-lg overflow-hidden">
                           <img
-                            src={image}
+                            src={image?.[index].image_url}
                             alt="Product image"
                             className="object-cover w-full h-full"
                           />

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, FormEvent } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -11,11 +11,106 @@ import { Textarea } from "@/components/ui/textarea"
 import { useCart } from "@/contexts/cart-context"
 import Image from "next/image"
 import { ChevronLeft, CreditCard, Truck, MapPin } from "lucide-react"
+import axios from 'axios'
+
+import process from "process"
+
+interface CheckoutFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  region: string;
+  notes?: string;
+}
 
 export default function CheckoutPage() {
-  const { items, totalPrice } = useCart()
-  const [paymentMethod, setPaymentMethod] = useState("card")
-  const [shippingMethod, setShippingMethod] = useState("standard")
+  const { items, totalPrice, clearCart } = useCart();
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [shippingMethod, setShippingMethod] = useState("standard");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+
+    const formData = new FormData(e.currentTarget);
+    const formValues: CheckoutFormData = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      address: formData.get('address') as string,
+      city: formData.get('city') as string,
+      region: formData.get('region') as string,
+      notes: formData.get('notes') as string || undefined,
+    };
+
+    try {
+      // Generate a unique order ID
+      const orderId = `order_${Date.now()}`;
+      
+      // Get the first product to get the seller ID
+      const productId = items[0]?.product.id;
+      
+      if (!productId) {
+        throw new Error('Aucun produit dans le panier');
+      }
+
+      // Send payment request
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          amount: totalPrice,
+          email: "do@co.it",
+          order_id: orderId,
+          user_id: localStorage.getItem('user_id') , // Using phone as user identifier
+          product_id: productId,
+          shipping_info: {
+            name: `${formValues.firstName} ${formValues.lastName}`,
+            address: formValues.address,
+            city: formValues.city,
+            region: formValues.region,
+            phone: formValues.phone,
+            notes: formValues.notes
+          },
+          payment_method: paymentMethod,
+          shipping_method: shippingMethod,
+          items: items.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          }))
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      // If payment URL is returned, redirect to payment page
+      if (response.data?.payment_url) {
+        // Clear cart before redirecting
+        clearCart();
+        // Redirect to payment page
+        window.location.href = response.data.payment_url;
+      } else {
+        throw new Error('Aucune URL de paiement reçue');
+      }
+    } catch (err: any) {
+      console.error('Erreur de paiement:', err);
+      setError(err.response?.data?.message || 'Une erreur est survenue lors du traitement de votre paiement.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Calculer les frais de livraison en fonction de la méthode
   const shippingCost = shippingMethod === "express" ? 2500 : 1000
@@ -49,7 +144,7 @@ export default function CheckoutPage() {
         <h1 className="text-3xl font-bold">Finaliser la commande</h1>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           {/* Informations de livraison */}
           <div className="bg-card rounded-lg border p-6">
@@ -178,7 +273,8 @@ export default function CheckoutPage() {
                 <div key={item.product.id} className="flex gap-3">
                   <div className="relative h-16 w-16 rounded-md overflow-hidden flex-shrink-0 border">
                     <Image
-                      src={item.product.images[0] || "/placeholder.svg"}
+                      // src={item.product.images[0] || "/placeholder.svg"}
+                      src={process.env.NEXT_PUBLIC_URL +"storage/"+ item.product.images?.[0]?.image_url || "/placeholder.svg?height=200&width=200"}
                       alt={item.product.name}
                       fill
                       className="object-cover"
@@ -213,8 +309,13 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <Button size="lg" className="w-full mt-6">
-              Confirmer la commande
+            <Button 
+              type="submit"
+              size="lg" 
+              className="w-full mt-6"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Traitement en cours...' : 'Confirmer la commande'}
             </Button>
 
             <p className="text-xs text-muted-foreground text-center mt-4">
@@ -230,7 +331,7 @@ export default function CheckoutPage() {
             </p>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   )
 }

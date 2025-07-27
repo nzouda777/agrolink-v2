@@ -147,7 +147,7 @@ export default function AuthPage() {
       password: password as string,
       type_id: type_id as string,
       city_id: city as string,
-      role_id: '2'
+      role_id: type_id.toString() == "1" ? 2 : 1
     }
     
     try {
@@ -155,7 +155,7 @@ export default function AuthPage() {
       setError(null)
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, data)
       console.log('Inscription réussie:', response.data)
-      router.push('/auth')
+      router.push('/auth?login')
     } catch (error) {
       const message = error.response?.data?.message || "Une erreur est survenue lors de l'inscription"
       setError(message)
@@ -188,7 +188,22 @@ export default function AuthPage() {
       console.log('Connexion réussie:', response.data)
       localStorage.setItem("token", response.data.access_token)
       localStorage.setItem("user", JSON.stringify(response.data.user))
-      router.push('/seller/dashboard')
+      
+      switch (response.data.user.role_id) {
+        case 1:
+          router.push('/seller/dashboard')
+          break
+        case 2:
+          router.push('/buyer/dashboard')
+          break
+        case 3:
+          router.push('/admin/dashboard')
+          break
+        default:
+          router.push('/auth')
+          break
+      }
+
     } catch (error) {
       const message = error.response?.data?.message || "Une erreur est survenue lors de la connexion"
       setError(message)
