@@ -65,8 +65,7 @@ export default function AddProduct() {
     status: "active"
   })
   const [categoriesLoading, setCategoriesLoading] = useState(true)
-  const [fetchedCategories, setFetchedCategories] = useState<string[]>([])
-  const [fetchCategoryIds, setFetchCategoryIds] = useState<string[]>([])
+  const [categories, setCategories] = useState<Array<{id: string, name: string}>>([])
 
   // Vérifier l'authentification au montage
   useEffect(() => {
@@ -117,7 +116,7 @@ export default function AddProduct() {
       const formData = new FormData()
       formData.append('seller_id', user.id)
       formData.append('name', form.name)
-      formData.append('category_id', form.category)
+      formData.append('category_id', form.category_id)
       formData.append('price', form.price)
       formData.append('quantity', form.stock)
       formData.append('unit', form.unit)
@@ -152,7 +151,7 @@ export default function AddProduct() {
     }
   }
 
-  const isFormValid = form.name && form.category && form.price && form.stock && form.unit
+  const isFormValid = form.name && form.category_id && form.price && form.stock && form.unit
   // const [categoriesLoading, setCategoriesLoading] = useState(true)
   // const [fetchedCategories, setFetchedCategories] = useState<string[]>([])
 
@@ -173,12 +172,9 @@ export default function AddProduct() {
           'Authorization': `Bearer ${token}`
         }
       })
-      // Extraire uniquement le nom des catégories
-      const categoryNames = response.data.map((category: any) => category)
-      console.log(categoryNames)
-      const categoryIds = response.data.map((category: any) => category.id)
-      setFetchCategoryIds(categoryIds)
-      setFetchedCategories(categoryNames)
+      // Set the categories with their IDs and names
+      console.log("Fetched categories:", response.data)
+      setCategories(response.data)
       return categoryNames
     } catch (error) {
       console.error("Erreur lors du chargement des catégories:", error)
@@ -240,23 +236,25 @@ export default function AddProduct() {
                 <div className="space-y-2">
                   <Label htmlFor="category">Catégorie *</Label>
                   <Select
-                    value={form.category}
-                    onValueChange={(value) => handleInputChange("category", value)}
+                    value={form.category_id}
+                    onValueChange={(value) => handleInputChange("category_id", value)}
                   >
                     <SelectTrigger>
                       <SelectValue>
-                        {form.category
-                          ? fetchedCategories.includes(form.category)
-                            ? form.category.id
-                            : defaultCategories.find(cat => cat === form.category) || form.category
+                        {form.category_id
+                          ? categories.find(cat => cat.id === form.category_id)?.name ||
+                            defaultCategories.find(cat => cat === form.category_id) ||
+                            form.category_id 
                           : "Sélectionner une catégorie"}
                       </SelectValue>
                     </SelectTrigger>
                     <SelectContent>
                       {categoriesLoading ? (
-                        <SelectItem value="">Chargement des catégories...</SelectItem>
+                        <SelectItem value="loading" disabled>
+                          Chargement des catégories...
+                        </SelectItem>
                       ) : (
-                        (fetchedCategories.length > 0 ? fetchedCategories : defaultCategories).map((category) => (
+                        (categories.length > 0 ? categories : defaultCategories.map(name => ({id: name, name}))).map((category) => (
                           <SelectItem key={category.id} value={category.id}>
                             {category.name}
                           </SelectItem>

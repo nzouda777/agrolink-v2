@@ -5,14 +5,15 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Star, Truck, ShieldCheck, Heart, Share2, MapPin, Phone, Mail, ChevronRight, Minus, Plus } from "lucide-react"
+import { Star, Truck, ShieldCheck, Heart, Share2, MapPin, Phone, Mail, ChevronRight, Minus, Plus, Check } from "lucide-react"
 import { LoadingSpinner } from "@/components/ui/loading-spinner"
 import { productsData, reviewsData } from "@/data"
 import type { Product, Review, Category } from "@/types"
+import { useCart } from "@/contexts/cart-context"
+import { toast } from "@/components/ui/use-toast"
 
 interface ProductWithCategory extends Product {
   category: Category | string
@@ -25,7 +26,10 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
+  const [isAddingToCart, setIsAddingToCart] = useState(false)
+  const [isInCart, setIsInCart] = useState(false)
   const unwrappedParams = use(params) as { id: string }
+  const { addItem, items } = useCart()
 
   useEffect(() => {
     const loadData = async () => {
@@ -60,16 +64,43 @@ export default function ProductPage({ params }: { params: { id: string } }) {
   }, [unwrappedParams.id])
 
   const incrementQuantity = () => {
-    if (product && quantity < product.quantity) {
-      setQuantity(quantity + 1)
-    }
+    setQuantity((prev) => Math.min(prev + 1, product?.quantity || 10))
   }
 
   const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1)
-    }
+    setQuantity((prev) => Math.max(1, prev - 1))
   }
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    
+    setIsAddingToCart(true);
+    try {
+      addItem(product, quantity);
+      toast({
+        title: "Produit ajouté au panier",
+        description: `${quantity} x ${product.name} a été ajouté à votre panier`,
+      });
+      setIsInCart(true);
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier:", error);
+      toast({
+        title: "Erreur",
+        description: "Impossible d'ajouter le produit au panier",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAddingToCart(false);
+    }
+  };
+
+  // Check if product is already in cart
+  useEffect(() => {
+    if (product) {
+      const itemInCart = items.find(item => item.product.id === product.id);
+      setIsInCart(!!itemInCart);
+    }
+  }, [items, product]);
 
   if (isLoading) {
     return (
@@ -176,10 +207,40 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="flex-1">
-                Ajouter au panier
+              <Button 
+                size="lg" 
+                className="flex-1" 
+                onClick={handleAddToCart}
+                disabled={isAddingToCart || isInCart || product.quantity === 0}
+              >
+                {isAddingToCart ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Ajout en cours...
+                  </>
+                ) : isInCart ? (
+                  <>
+                    <Check className="mr-2 h-4 w-4" />
+                    Déjà au panier
+                  </>
+                ) : product.quantity === 0 ? (
+                  'Rupture de stock'
+                ) : (
+                  'Ajouter au panier'
+                )}
               </Button>
-              <Button size="lg" variant="outline" className="flex-1">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="flex-1"
+                disabled={product.quantity === 0}
+                onClick={() => {
+                  if (!isInCart) {
+                    handleAddToCart();
+                  }
+                  // Add navigation to checkout here if needed
+                }}
+              >
                 Acheter maintenant
               </Button>
             </div>

@@ -15,17 +15,23 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import { cn } from "@/lib/utils"
-import { Search, ShoppingCart, Menu, X, User, Heart, ChevronRight } from "lucide-react"
+import { Search, ShoppingCart, Menu, X, User, Heart, ChevronRight, LogOut } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { ModeToggle } from "./mode-toggle"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/contexts/cart-context"
 import { useSearch } from "@/contexts/search-context"
 import { categoriesData } from "@/data"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { useRouter } from "next/navigation"
+import { useAuthStore } from "@/stores/auth-store"
 
 export default function Header() {
   const router = useRouter()
@@ -34,7 +40,8 @@ export default function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [isMounted, setIsMounted] = useState(false)
-
+  const { user, isAuthenticated, logout } = useAuthStore()
+  
   // Éviter les erreurs d'hydratation
   useEffect(() => {
     setIsMounted(true)
@@ -154,8 +161,7 @@ export default function Header() {
                 <Link href="/products" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>Produits</NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
+              
                 <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>À propos</NavigationMenuLink>
                 </Link>
@@ -269,31 +275,50 @@ export default function Header() {
           <ModeToggle />
 
           <div className="hidden md:flex gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <User className="mr-2 h-4 w-4" />
-                  Compte
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
-                <div className="flex items-center justify-start gap-2 p-2">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>IN</AvatarFallback>
-                  </Avatar>
-                  <div className="flex flex-col space-y-0.5">
-                    <p className="text-sm font-medium">Invité</p>
-                    <p className="text-xs text-muted-foreground">Non connecté</p>
-                  </div>
-                </div>
-                <DropdownMenuItem asChild>
-                  <Link href="/auth">Se connecter</Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link href="/auth?tab=register">S'inscrire</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              {isAuthenticated() ? (
+                <NavigationMenuItem>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+                        <Avatar className="h-8 w-8">
+                          <AvatarFallback>
+                            {user?.name?.charAt(0).toUpperCase() || 'U'}
+                          </AvatarFallback>
+                        </Avatar>
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-56" align="end" forceMount>
+                      <div className="flex items-center gap-4 p-3">
+                        <div className="flex flex-col space-y-1">
+                          <p className="text-sm font-medium leading-none">{user?.name || 'Utilisateur'}</p>
+                          <p className="text-xs leading-none text-muted-foreground">
+                            {user?.email || ''}
+                          </p>
+                        </div>
+                      </div>
+                      <DropdownMenuItem asChild>
+                        <Link href="/account" className="w-full cursor-pointer">
+                          <User className="mr-2 h-4 w-4" />
+                          Mon compte
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => logout()} className="cursor-pointer">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        <span>Déconnexion</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </NavigationMenuItem>
+              ) : (
+                <NavigationMenuItem>
+                  <Link href="/auth" legacyBehavior passHref>
+                    <Button variant="outline" className="gap-2">
+                      <User className="h-4 w-4" />
+                      Se connecter
+                    </Button>
+                  </Link>
+                </NavigationMenuItem>
+              )}
           </div>
 
           <Button variant="ghost" size="icon" className="md:hidden" asChild>

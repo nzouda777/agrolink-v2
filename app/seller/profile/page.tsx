@@ -261,8 +261,8 @@ export default function ProfilePage() {
       };
 
       // Send the request to create/update the payment API key
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/payment-api-keys`,
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL}/payment-api-keys/${id}`,
         paymentData,
         {
           headers: {
